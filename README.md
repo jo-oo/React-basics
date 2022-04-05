@@ -1,3 +1,7 @@
+# React learning project
+
+This project is a study of the basics in React
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

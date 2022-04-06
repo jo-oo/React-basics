@@ -1,6 +1,14 @@
 import './App.css';
 import { useState } from 'react'; //importerar useState-hooken*/funktionen från react biblioteket
 
+/*//sätter initiala värdet av clicks till 100
+const initialClickState = () => {
+  return 100    
+}
+*/
+
+
+
 //detta kallas en Template
 const App = () => {
 
@@ -12,6 +20,8 @@ const App = () => {
                                                             //setMessage: 2a parmeter är en funktion vi kallar på för att kunna uppdatera variabeln
                                                             //returnerar en array med 2 element i sig.
   const [clicks, setClicks] = useState(0) //sätter initiala värdet av clicks till 0 i början och anger useState för att ange att det ska kunna uppdateras
+                                                          //vi kan också sätte in en funktion här. =useState(initialClickState) Om vi inte kallar på den, vilket blir knasigt så kommer den bara köras en gång. Då sätter vi att det rusprunlgiga statet ska vara hela den här funktionen och inte värdet den returnerar 
+                                                          //så det blir 100, och sen 102 och sen 104 osv. (vi kommer inte anvönda detta på kursen nu)
 	const [posts, setPosts] = useState([
 		{ title: "React Rocks 🤘🏻!", likes: 1337 },
 		{ title: "JSX Rocks Even Moar 🤘🏻!", likes: 42 },

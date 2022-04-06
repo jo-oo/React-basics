@@ -51,8 +51,7 @@ const App = () => {
               // console.log("You clicked the button mom!") 
                 //console.log("Message is:", message) //first value of message
                 //setMessage("This is my changed message after onclick on green button:") 
-                //{/*värdet på message kommer ändras här OCH SKRIVS UT i WEBBsidan */}
-                
+                //{/*värdet på message kommer ändras här OCH SKRIVS UT i WEBBsidan */} 
   }
 
   const handleSalaryClick = (amount) => {
@@ -120,13 +119,22 @@ const App = () => {
       <hr />
       <h2>Posts</h2>
 
-      <ul>
+      <ul> 
         {
           posts.map( (post, index) =>
             (
-              <li key={index}>
+              <li key={index}> 
                 {post.title} ({post.likes})
-              </li>
+                <button 
+                  className="btn btn-success btn-sm" 
+                  onClick={() => {
+                    post.likes++
+                    //update posts genom att skapa ny array där nya värden skrivs ut i
+                    setPosts( [...posts] )
+
+                  }}
+                  >Click here to update posts</button>
+              </li> //när dessa iterieras så skrivs en Post ut per gång/loop! 
             )
           )
         }

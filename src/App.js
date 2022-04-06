@@ -31,7 +31,7 @@ const App = () => {
   //dessa 3 är initiala värdet av posts
 
   const [salary, setSalary]  = useState(10)//sätter initiala värdet av sakary till 10 i början och a
-
+  const [showSalarySection, setShowSalarySection] =  useState(true)//sätter default på show salary section att vara true så den visas i början
 
   const handleButtonClick = () => {
     console.log("clicks before change:", clicks);
@@ -85,7 +85,7 @@ const App = () => {
   const handleDeletePostClicks = (clickedPost) => {
       const listWIthDeletedPost = posts.filter(post => post !== clickedPost)
         setPosts( [ ...listWIthDeletedPost ] )
-        
+      //notera att johan gjorde en ännu kortare variant av denna på en rad, utan setPosts på raf 87 men de funkar samma.
     
   /*const handleDeletePostClicks = (clickedPost) => {
       const listWIthDeletedPost = posts.filter(post => {
@@ -117,40 +117,49 @@ const App = () => {
 
 			<hr />
 
-      
-      <p>Salary per hour: SALARY &euro; { salary }</p>
+      <button className="btn btn-primary" onClick={()=> setShowSalarySection(!showSalarySection)}>SHOW/HIDE SALARY</button>
 
-      {salary < 10 && (
-				<div className="alert alert-warning">You might want to get a second job?</div>
-			)}
 
-      {salary == 5 && (
-				<div className="alert alert-warning">This is the slave limit. We´ll stop you there</div>
-			)}
+      { /* Denna div/sektion om Salary ska bara visas om showSalary = true  . Sätt helöa sektionen innanför detta conditional statement*/}
+      { showSalarySection && (
+        <div> 
+          {  /*CONDITIONAL RENDERING    - båda saker i ett && statemenet måste ju vara true för att det ska köras så då räcker det med att kola om det första är true för annars klörs den ju ändå inte. = rendera BARA om första villkoret är true*/}
 
-      <div className="buttons">
-				<div className="mb-1">
-					<button
-						className="btn btn-primary btn-lg"
-            onClick={ () => handleSalaryClick(1) }
-					>Raise 1 &euro; 🤑</button>
-					<button
-						className="btn btn-warning btn-lg"
-            onClick={ () => handleSalaryClick(-1) }
-					>Decrease 1 &euro; 😢</button>
-				</div>
-    
-				<div className="mb-1">
-					<button
-						className="btn btn-success btn-lg"
-            onClick={ () => handleSalaryClick(5) }
-					>Raise 5 &euro; 🤑🤑🤑</button>
-					<button
-						className="btn btn-danger btn-lg"
-            onClick={ () => handleSalaryClick(-5) }
-					>Decrease 5 &euro; 😢😢😢</button>
-				</div>
-			</div>
+          <p>Salary per hour: SALARY &euro; { salary }</p>
+
+          {salary < 10 && (
+            <div className="alert alert-warning">You might want to get a second job?</div>
+          )}
+
+          {salary == 5 && (
+            <div className="alert alert-warning">This is the slave limit. We´ll stop you there</div>
+          )}
+
+          <div className="buttons">
+            <div className="mb-1">
+              <button
+                className="btn btn-primary btn-lg"
+                onClick={ () => handleSalaryClick(1) }
+              >Raise 1 &euro; 🤑</button>
+              <button
+                className="btn btn-warning btn-lg"
+                onClick={ () => handleSalaryClick(-1) }
+              >Decrease 1 &euro; 😢</button>
+            </div>
+        
+            <div className="mb-1">
+              <button
+                className="btn btn-success btn-lg"
+                onClick={ () => handleSalaryClick(5) }
+              >Raise 5 &euro; 🤑🤑🤑</button>
+              <button
+                className="btn btn-danger btn-lg"
+                onClick={ () => handleSalaryClick(-5) }
+              >Decrease 5 &euro; 😢😢😢</button>
+            </div>
+          </div>
+        </div>
+      )}
     
       <hr />
       <h2>Posts</h2>

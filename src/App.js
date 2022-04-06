@@ -35,10 +35,10 @@ const App = () => {
 
   const handleButtonClick = () => {
     console.log("clicks before change:", clicks);
-
+  
     setClicks( prevClicks => prevClicks + 1)  //prevClicks = 0 return 1
-    //setClicks tar in föregående Clicks, alltså värdet av vad clicks var innan. 
-    //när vi tar det föregående värdet + 1 så kommer react vänta tills detta värdet är uppdaterat(alltså inladdat) innan den kär nästa setClicks-rad 34
+                                              //setClicks tar in föregående Clicks, alltså värdet av vad clicks var innan. 
+                                              //när vi tar det föregående värdet + 1 så kommer react vänta tills detta värdet är uppdaterat(alltså inladdat) innan den kär nästa setClicks-rad 34
 
     console.log("clicks after the change:", clicks);
 
@@ -47,7 +47,8 @@ const App = () => {
 
     //göär man många state-uppdateringar efter varandra så är det säkrast att använda en funktion som tar emot den tidigare staten o förändrar den på nåt sätt.
     //ska du bara skriva över den behöver du inte använda en funktion då bara skriver du över den
-	          	//setClicks(clicks + 1);
+	          	
+              //setClicks(clicks + 1);
               // console.log("You clicked the button mom!") 
                 //console.log("Message is:", message) //first value of message
                 //setMessage("This is my changed message after onclick on green button:") 
@@ -64,6 +65,41 @@ const App = () => {
 
     setSalary(salary + amount);	
   }
+
+
+  //UPPDATERA POSTS-Funktion
+  //ta emot vilken post vi vill uppdatera med mer likes
+  const handleLikesClick = (post) => {
+      post.likes++
+      setPosts([ ...posts ] ) //skapar en ny array här. sprider ut min nuvarande array, som att vi tar varje objekt i posts och skriver ut dom i arrayen
+      //setPosts( [ {}, {}, {} ] ) //typ samma princip här. alltså här sätter vi till 3 tomma objekt
+                                //den nya arrayen består av samma objekt som den gamla arrayen
+  }
+
+  //DELETe POSTs-funktion
+  //ska innehålla alla posts FÖRUTOM den vi klickade på.=
+  //Filtrera bort den post vi klickade på 
+  //använder FILTEr. itererar över posts och gör en jämförelese för varje sak(post) i listan posts
+  //allt vi returnerar TRUE på kommer FINNAS med i DEN NYA LISTAN
+
+  const handleDeletePostClicks = (clickedPost) => {
+      const listWIthDeletedPost = posts.filter(post => post !== clickedPost)
+        setPosts( [ ...listWIthDeletedPost ] )
+        
+    
+  /*const handleDeletePostClicks = (clickedPost) => {
+      const listWIthDeletedPost = posts.filter(post => {
+          return post !== clickedPost
+          
+          /* = samma som denna if-sats:
+          if (post !== clickedPost) {
+              return true
+          } else {
+            return false
+          }
+          */ 
+  }  
+
 
 
   //Add onclicks to the salary-buttond = onClick={ () => handleSalaryClick(1) }
@@ -121,21 +157,24 @@ const App = () => {
 
       <ul> 
         {
-          posts.map( (post, index) =>
+          posts.map( (post, index) => //UPDATE POSTS WITH LIKES ON EACH ONE + DELETE POSTS
             (
               <li key={index}> 
                 {post.title} ({post.likes})
                 <button 
-                  className="btn btn-success btn-sm" 
-                  onClick={() => {
-                    post.likes++
-                    //update posts genom att skapa ny array där nya värden skrivs ut i
-                    setPosts( [...posts] )
-
-                  }}
+                    className="btn btn-success btn-sm" 
+                    onClick={() => handleLikesClick(post)} //add villken post du vill uppdatera med likes
+                    
                   >Click here to update posts</button>
+
+                  <button
+                    className="btn btn-danger btn-sm" 
+                    onClick={() => handleDeletePostClicks(post)}
+                  
+                  >Delete Post</button>
+
               </li> //när dessa iterieras så skrivs en Post ut per gång/loop! 
-            )
+            ) 
           )
         }
       </ul>
@@ -162,5 +201,31 @@ export default App;
   } 
   */
 
+
+  //Add likes to ALL Posts
+  //using function inside here (not preferred coz its a bit long)
+  //you should add a function for handle PostsLikesClicks up in the code instead
+  /*
+  <ul> 
+  {
+    posts.map( (post, index) =>
+      (
+        <li key={index}> 
+          {post.title} ({post.likes})
+          <button 
+            className="btn btn-success btn-sm" 
+            onClick={() => {
+              post.likes++
+              //update posts genom att skapa ny array där nya värden skrivs ut i
+              setPosts( [...posts] )
+
+            }}
+            >Click here to update posts</button>
+        </li> //när dessa iterieras så skrivs en Post ut per gång/loop! 
+      )
+    )
+  }
+</ul>
+*/
 
 

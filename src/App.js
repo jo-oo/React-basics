@@ -32,6 +32,8 @@ const App = () => {
 
   const [salary, setSalary]  = useState(10)//sätter initiala värdet av sakary till 10 i början och a
   const [showSalarySection, setShowSalarySection] =  useState(true)//sätter default på show salary section att vara true så den visas i början
+  //const [showSalaryAlert, setShowSalaryAlert] =  useState(true) //NOT IN USE YET
+  const [showPostSection, setShowPostSection] =  useState(true) //Post Section Show is defualt true
 
   const handleButtonClick = () => {
     console.log("clicks before change:", clicks);
@@ -102,7 +104,7 @@ const App = () => {
 
 
 
-  //Add onclicks to the salary-buttond = onClick={ () => handleSalaryClick(1) }
+  //Add onclicks to the salary-button = onClick={ () => handleSalaryClick(1) }
   return ( 
     <div className="App">
       <h1>React Basics</h1>
@@ -117,8 +119,16 @@ const App = () => {
 
 			<hr />
 
-      <button className="btn btn-primary" onClick={()=> setShowSalarySection(!showSalarySection)}>SHOW/HIDE SALARY</button>
 
+
+      {      /*skapa SALARY SECTION OCH DÖLJVISA DEN MED EN KNAPP      */}
+
+      {/*hårdkoda Button  = <button className="btn btn-primary" onClick={()=> setShowSalarySection(!showSalarySection)}>SHOW/HIDE SALARY</button>*/}
+      {/* Dynamisk Knapp= if showSalarySection är true så rendera ut detta*/}
+      <button className="btn btn-primary" onClick={()=> setShowSalarySection(!showSalarySection)}>
+        { showSalarySection && "HIDE SALARY" }
+        { !showSalarySection && "SHOW SALARY" }
+      </button>
 
       { /* Denna div/sektion om Salary ska bara visas om showSalary = true  . Sätt helöa sektionen innanför detta conditional statement*/}
       { showSalarySection && (
@@ -127,9 +137,17 @@ const App = () => {
 
           <p>Salary per hour: SALARY &euro; { salary }</p>
 
-          {salary < 10 && (
+          {salary <10 && (
             <div className="alert alert-warning">You might want to get a second job?</div>
           )}
+
+          {/*
+          {salary <=5 && (
+            <div className="alert alert-warning">
+              { !showSalaryAlert && "" }
+            </div>
+          )}
+          */}
 
           {salary == 5 && (
             <div className="alert alert-warning">This is the slave limit. We´ll stop you there</div>
@@ -161,32 +179,43 @@ const App = () => {
         </div>
       )}
     
-      <hr />
-      <h2>Posts</h2>
+    <hr />
 
-      <ul> 
-        {
-          posts.map( (post, index) => //UPDATE POSTS WITH LIKES ON EACH ONE + DELETE POSTS
-            (
-              <li key={index}> 
-                {post.title} ({post.likes})
-                <button 
-                    className="btn btn-success btn-sm" 
-                    onClick={() => handleLikesClick(post)} //add villken post du vill uppdatera med likes
-                    
-                  >Click here to update posts</button>
+      {/* Dynamisk Knapp= if showSalarySection är true så rendera ut detta*/}
+          <button className="btn btn-primary" onClick={()=> setShowPostSection(!showPostSection)}>
+      { showPostSection && "HIDE POSTS" }
+      { !showPostSection && "SHOW POSTS" }
+      </button>
 
-                  <button
-                    className="btn btn-danger btn-sm" 
-                    onClick={() => handleDeletePostClicks(post)}
-                  
-                  >Delete Post</button>
+      { showPostSection && (
+          <div>
+            <h2>Posts</h2>
 
-              </li> //när dessa iterieras så skrivs en Post ut per gång/loop! 
-            ) 
-          )
-        }
-      </ul>
+            <ul> 
+              {
+                posts.map( (post, index) => //UPDATE POSTS WITH LIKES ON EACH ONE + DELETE POSTS
+                  (
+                    <li key={index}> 
+                      {post.title} ({post.likes})
+                      <button 
+                          className="btn btn-success btn-sm" 
+                          onClick={() => handleLikesClick(post)} //add villken post du vill uppdatera med likes
+                          
+                        >Click here to update posts</button>
+
+                        <button
+                          className="btn btn-danger btn-sm" 
+                          onClick={() => handleDeletePostClicks(post)}
+                        
+                        >Delete Post</button>
+
+                    </li> //när dessa iterieras så skrivs en Post ut per gång/loop! 
+                  ) 
+                )
+              }
+            </ul>
+        </div>
+        )}
 
     </div>//läser in funktionen handleButtonClick för Click-Event. 
     //Vi kan dock inte kalla på den häör som i exemepl:button onClick={ handleButtonClick () } pga då läses den in så fort appen körs

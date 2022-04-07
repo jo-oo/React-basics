@@ -27,10 +27,11 @@ const App = () => {
 		{ title: "JSX Rocks Even Moar 🤘🏻!", likes: 42 },
 		{ title: "Got State?", likes: 3 },
 	]) 
-  
   //dessa 3 är initiala värdet av posts
 
- 
+  //input state
+  const [newPostTitle, setNewPostTitle] = useState('')
+
   const [showPostSection, setShowPostSection] =  useState(true) //Post Section Show is defualt true
 
   const handleButtonClick = () => {
@@ -77,15 +78,27 @@ const App = () => {
       const listWIthDeletedPost = posts.filter(post => post !== clickedPost)
         setPosts( [ ...listWIthDeletedPost ] )
       //notera att johan gjorde en ännu kortare variant av denna på en rad, utan setPosts på raf 87 men de funkar samma.
-    
+  }
+
+  const handleFormSubmit = e => {
+      //stop form from submitting
+      e.preventDefault()
+
+      //push a new post to the posts state
+      const newPost = { title: newPostTitle, likes: 0 }
+      setPosts([...posts, newPost])  //sätter posts till en ny array som ska vara de gamla posten & de nya posten
+      
+      //clear newPostTitle state
+      setNewPostTitle('')
+
   /*const handleDeletePostClicks = (clickedPost) => {
       const listWIthDeletedPost = posts.filter(post => {
           return post !== clickedPost
-          
+
           /* = samma som denna if-sats:
           if (post !== clickedPost) {
               return true
-          } else {
+          } else { 
             return false
           }
           */ 
@@ -95,7 +108,7 @@ const App = () => {
 
   //Add onclicks to the salary-button = onClick={ () => handleSalaryClick(1) }
   return ( 
-    <div className="App">
+    <div className="App container">
       <h1>React Basics</h1>
 
       <h2>{ message }</h2>
@@ -112,7 +125,9 @@ const App = () => {
       <Salary />
 
       
-    <hr />
+      <hr />
+
+
 
       {/* Dynamisk Knapp= if showSalarySection är true så rendera ut detta*/}
           <button className="btn btn-primary" onClick={()=> setShowPostSection(!showPostSection)}>
@@ -123,6 +138,27 @@ const App = () => {
       { showPostSection && (
           <div>
             <h2>Posts</h2>
+
+            <form onSubmit = {handleFormSubmit} >
+              <div className="input-group">
+                  <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Post tile"
+                      onChange={(e) => {
+                        setNewPostTitle(e.target.value) ///onCHange= uppdaterar newPostTitle state. //update state when input changes
+                      }}
+                      value={ newPostTitle } //sätter sen värdet tilln newPostTitle//update input when state changes
+                      //2-vägs data-binding= detta. Du kan uppdatera Components i Isnpektorn geno att skriva i inputfältet men du kan cokså skriva i components och så uppdateras inputfältet.
+                  />
+                  <button
+                      type="submit"
+                      class="btn btn-primary"
+                  >
+                    Create
+                  </button>
+              </div>
+            </form>
 
             <ul> 
               {
@@ -198,5 +234,3 @@ export default App;
   }
 </ul>
 */
-
-

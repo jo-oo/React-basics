@@ -64,7 +64,7 @@ const App = () => {
   const handleLikesClick = (post) => {
       post.likes++
       setPosts([ ...posts ] ) //skapar en ny array här. sprider ut min nuvarande array, som att vi tar varje objekt i posts och skriver ut dom i arrayen
-      //setPosts( [ {}, {}, {} ] ) //typ samma princip här. alltså här sätter vi till 3 tomma objekt
+                                //setPosts( [ {}, {}, {} ] ) //typ samma princip här. alltså här sätter vi till 3 tomma objekt
                                 //den nya arrayen består av samma objekt som den gamla arrayen
   }
 
